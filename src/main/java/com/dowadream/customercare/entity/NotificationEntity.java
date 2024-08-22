@@ -1,4 +1,4 @@
-package com.dowadream.customercare.Entity;
+package com.dowadream.customercare.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

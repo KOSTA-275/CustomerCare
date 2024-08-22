@@ -1,7 +1,6 @@
-package com.dowadream.customercare.Repository;
+package com.dowadream.customercare.repository;
 
-import com.dowadream.customercare.Entity.FaqEntity;
-import com.dowadream.customercare.Entity.NotificationEntity;
+import com.dowadream.customercare.entity.FaqEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
