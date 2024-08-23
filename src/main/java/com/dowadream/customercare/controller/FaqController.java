@@ -53,7 +53,7 @@ public class FaqController {
      * @param faqVO
      * faqSeq, faqTitle, faqContent, userSeq
      */
-    @PostMapping("/faq_update")
+    @PutMapping("/faq_update")
     public void ctlFaqUpdate(@RequestBody FaqEntity faqVO){
         faqService.svcFaqUpdate(faqVO);
     }
@@ -63,7 +63,7 @@ public class FaqController {
      * @param faqVO
      * faqSeq
      */
-    @GetMapping("/faq_delete")
+    @DeleteMapping("/faq_delete")
     public void ctlFaqDelete(@RequestBody FaqEntity faqVO){
         faqService.svcFaqDelete(faqVO);
     }

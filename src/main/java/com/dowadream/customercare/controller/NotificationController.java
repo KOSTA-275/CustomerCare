@@ -53,7 +53,7 @@ public class NotificationController {
      * @param notiVO
      * notiSeq, notiTitle, notiContent, userSeq
      */
-    @PostMapping("/noti_update")
+    @PutMapping("/noti_update")
     public void ctlNotificationUpdate(@RequestBody NotificationEntity notiVO){
         notificationService.svcNotificationUpdate(notiVO);
     }
@@ -63,7 +63,7 @@ public class NotificationController {
      * @param notiVO
      * notiSeq
      */
-    @GetMapping("/noti_delete")
+    @DeleteMapping("/noti_delete")
     public void ctlNotificationDelete(@RequestBody NotificationEntity notiVO){
         notificationService.svcNotificationDelete(notiVO);
     }
