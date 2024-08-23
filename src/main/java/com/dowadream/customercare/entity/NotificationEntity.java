@@ -3,7 +3,7 @@ package com.dowadream.customercare.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity(name = "NotificationEntity")
 @Data
@@ -25,7 +25,7 @@ public class NotificationEntity {
     private Long userSeq;
 
     @Column(name = "noti_regdate", nullable = false, columnDefinition = "date default sysdate")
-    private LocalDate notiRegdate = LocalDate.now();
+    private LocalDateTime notiRegdate = LocalDateTime.now();
     // LocalDate Java 8부터 도입된 새로운 날짜 및 시간 API에서 제공하는 클래스입니다. 시간 정보를 포함하지 않고 오로지 날짜 정보(년, 월, 일)만 저장합니다.
     // Date는 변경 가능한 객체입니다. 객체의 상태가 변경될 수 있습니다.
     // LocalDate는 불변 객체로, 객체의 상태가 변경되지 않습니다. 날짜 말고 시간까지 필요하면 LocalDateTime 사용.
