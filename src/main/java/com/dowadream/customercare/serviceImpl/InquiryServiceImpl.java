@@ -51,12 +51,9 @@ public class InquiryServiceImpl implements InquiryService {
     public void svcInquiryDelete(InquiryEntity inqVO) {
         inquiryRepository.deleteById(inqVO.getInqSeq());
     }
-
-
-
-
+    
     @Transactional
-    @Override // 문의 답변 추가
+    @Override // 문의 답변 입력 
     public String svcInquiryAnswerInsert(InquiryAnswerEntity ansVO, Long inqSeq) {
         // inquiryRepository에서 inqSeq를 사용해 InquiryEntity 조회
         Optional<InquiryEntity> optionalInqVO = inquiryRepository.findById(inqSeq);
@@ -75,7 +72,7 @@ public class InquiryServiceImpl implements InquiryService {
             ansVO.setInquiry(inqVO);
             inquiryAnswerRepository.save(ansVO);
 
-            return "ok";
+            return "created";
         } else {
             // 이미 답변이 존재하는 경우 처리 (필요에 따라 로그를 남기거나 예외를 던질 수 있음)
             return "alreadyExistError";
@@ -101,7 +98,7 @@ public class InquiryServiceImpl implements InquiryService {
         List<InquiryAnswerEntity> ansList = inquiryAnswerRepository.findAllByUserSeq(ansVO.getUserSeq());
         //직원 userSeq를 가지고 inquiry_answer로 가서 그 직원이 작성한 답변VO List를 가져옴.
 
-        List<InquiryEntity> inqList = new ArrayList<InquiryEntity>();
+        List<InquiryEntity> inqList = new ArrayList<>();
         // 직원이 작성한 InquiryEntity담을 List 선언
 
         for(InquiryAnswerEntity answerEntity : ansList){
@@ -115,4 +112,31 @@ public class InquiryServiceImpl implements InquiryService {
         return inqList;
     }
 
+    @Transactional
+    @Override // 문의 답변 수정
+    public String svcInquiryAnswerUpdate(InquiryAnswerEntity ansVO, Long inqSeq) {
+        // inquiryRepository에서 inqSeq를 사용해 InquiryEntity 조회
+        Optional<InquiryEntity> optionalInqVO = inquiryRepository.findById(inqSeq);
+
+        // InquiryEntity가 존재하지 않을 경우 "notFoundError" 반환
+        if (optionalInqVO.isEmpty()) {
+            return "notFoundError";
+        }
+
+        InquiryEntity inqVO = optionalInqVO.get();
+
+        // 기존 답변이 존재하는지 확인
+        InquiryAnswerEntity existingAnswer = inqVO.getInqAnswer();
+
+        if (existingAnswer != null) {
+            // 기존 답변이 존재하는 경우 해당 엔티티를 수정
+            existingAnswer.setInqAnswer(ansVO.getInqAnswer()); // 수정할 필드들을 업데이트
+            existingAnswer.setAnsRegdate(ansVO.getAnsRegdate()); // 필요에 따라 추가 필드 업데이트
+            inquiryAnswerRepository.save(existingAnswer); // 수정된 답변 엔티티 저장
+
+            return "updated";
+        } else {
+            return "noAnswerError"; // 답변이 아직 저장되지 않았음.
+        }
+    }
 }

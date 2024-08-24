@@ -34,7 +34,7 @@ public class InquiryController {
     public ResponseEntity<List<InquiryEntity>> ctlInquiryList(){
         List<InquiryEntity> inqList = inquiryService.svcInquiryList();
 
-        return new ResponseEntity<List<InquiryEntity>>(inqList, HttpStatus.OK);
+        return new ResponseEntity<>(inqList, HttpStatus.OK);
     }
 
     /**
@@ -46,7 +46,7 @@ public class InquiryController {
     public ResponseEntity<InquiryEntity> ctlInquiryDetail(@RequestBody InquiryEntity inqVO){
         InquiryEntity inqEntity = inquiryService.svcInquiryDetail(inqVO);
 
-        return new ResponseEntity<InquiryEntity>(inqEntity, HttpStatus.OK);
+        return new ResponseEntity<>(inqEntity, HttpStatus.OK);
     }
 
     /**
@@ -69,9 +69,6 @@ public class InquiryController {
         inquiryService.svcInquiryDelete(inqVO);
     }
 
-
-
-
     /**
      * 문의 답변 추가
      * @param ansVO
@@ -82,7 +79,7 @@ public class InquiryController {
     public String ctlInquiryAnswerInsert(@ModelAttribute InquiryAnswerEntity ansVO, @RequestParam("inqSeq") Long inqSeq){
 
         return inquiryService.svcInquiryAnswerInsert(ansVO, inqSeq);
-        // 정상적 insert -> "ok",
+        // 정상적 insert -> "created",
         // 없는 문의에 추가하고 있는 경우 -> "notFoundError",
         // 이미 문의 답변이 있는데 추가하는 경우 -> "alreadyExistError"
 
@@ -95,7 +92,7 @@ public class InquiryController {
     public ResponseEntity<List<InquiryEntity>> ctlInquiryNoAnswerList(){
         List<InquiryEntity> inqList = inquiryService.svcInquiryNoAnswerList();
 
-        return new ResponseEntity<List<InquiryEntity>>(inqList, HttpStatus.OK);
+        return new ResponseEntity<>(inqList, HttpStatus.OK);
     }
 
     /**
@@ -105,7 +102,7 @@ public class InquiryController {
     public ResponseEntity<List<InquiryEntity>> ctlInquiryYesAnswerList(){
         List<InquiryEntity> inqList = inquiryService.svcInquiryYesAnswerList();
 
-        return new ResponseEntity<List<InquiryEntity>>(inqList, HttpStatus.OK);
+        return new ResponseEntity<>(inqList, HttpStatus.OK);
     }
 
     /**
@@ -117,8 +114,21 @@ public class InquiryController {
     public ResponseEntity<List<InquiryEntity>> ctlInquiryMyAnswerList(@RequestBody InquiryAnswerEntity ansVO){
         List<InquiryEntity> inqList = inquiryService.svcInquiryMyAnswerList(ansVO);
 
-        return new ResponseEntity<List<InquiryEntity>>(inqList, HttpStatus.OK);
+        return new ResponseEntity<>(inqList, HttpStatus.OK);
     }
+
+    /**
+     * 문의 답변 수정
+     * @param ansVO
+     * inqAnswer, userSeq
+     * @param inqSeq
+     */
+    @PutMapping("/answer_update")
+    public String ctlInquiryUpdate(@ModelAttribute InquiryAnswerEntity ansVO, @RequestParam("inqSeq") Long inqSeq){
+        return inquiryService.svcInquiryAnswerUpdate(ansVO, inqSeq);
+        // 정상적 update -> "updated"
+    }
+
 
 
 }
