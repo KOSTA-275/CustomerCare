@@ -28,7 +28,7 @@ public class InquiryController {
     }
 
     /**
-     * 문의 리스트 조회
+     * 모든 문의 리스트 조회
      */
     @GetMapping("/inquiry_list")
     public ResponseEntity<List<InquiryEntity>> ctlInquiryList(){
@@ -80,11 +80,35 @@ public class InquiryController {
      */
     @PostMapping("/answer_insert")
     public String ctlInquiryAnswerInsert(@ModelAttribute InquiryAnswerEntity ansVO, @RequestParam("inqSeq") Long inqSeq){
+
         return inquiryService.svcInquiryAnswerInsert(ansVO, inqSeq);
         // 정상적 insert -> "ok",
         // 없는 문의에 추가하고 있는 경우 -> "notFoundError",
         // 이미 문의 답변이 있는데 추가하는 경우 -> "alreadyExistError"
 
     }
+
+    /**
+     * 답변 안한 문의 리스트 조회
+     */
+    @GetMapping("/inquiry_nolist")
+    public ResponseEntity<List<InquiryEntity>> ctlInquiryNoAnswerList(){
+        List<InquiryEntity> inqList = inquiryService.svcInquiryNoAnswerList();
+
+        return new ResponseEntity<List<InquiryEntity>>(inqList, HttpStatus.OK);
+    }
+
+    /**
+     * 내가 답한 문의 리스트 조회
+     * @param ansVO
+     * userSeq
+     */
+    @GetMapping("/inquiry_mylist")
+    public ResponseEntity<List<InquiryEntity>> ctlInquiryMyAnswerList(@RequestBody InquiryAnswerEntity ansVO){
+        List<InquiryEntity> inqList = inquiryService.svcInquiryMyAnswerList(ansVO);
+
+        return new ResponseEntity<List<InquiryEntity>>(inqList, HttpStatus.OK);
+    }
+
 
 }

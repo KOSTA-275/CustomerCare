@@ -13,4 +13,6 @@ public interface InquiryService {
     void svcInquiryDelete(InquiryEntity inqVO);                                      // 문의 삭제
 
     String svcInquiryAnswerInsert(InquiryAnswerEntity ansVO, Long inqSeq);           // 문의 답변 추가
+    List<InquiryEntity> svcInquiryNoAnswerList();                                    // 답변 안한 문의 리스트 조회
+    List<InquiryEntity> svcInquiryMyAnswerList(InquiryAnswerEntity ansVO);           // 내가 답한 문의 리스트 조회
 }
