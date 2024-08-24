@@ -99,6 +99,16 @@ public class InquiryController {
     }
 
     /**
+     * 답변 된 모든 문의 리스트 조회
+     */
+    @GetMapping("/inquiry_yeslist")
+    public ResponseEntity<List<InquiryEntity>> ctlInquiryYesAnswerList(){
+        List<InquiryEntity> inqList = inquiryService.svcInquiryYesAnswerList();
+
+        return new ResponseEntity<List<InquiryEntity>>(inqList, HttpStatus.OK);
+    }
+
+    /**
      * 내가 답한 문의 리스트 조회
      * @param ansVO
      * userSeq

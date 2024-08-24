@@ -31,7 +31,7 @@ public class InquiryServiceImpl implements InquiryService {
     @Transactional
     @Override   // 모든 문의 리스트 조회
     public List<InquiryEntity> svcInquiryList() {
-        return (List<InquiryEntity>) inquiryRepository.findAllByOrderByInqSeq();
+        return inquiryRepository.findAllByOrderByInqSeq();
     }
 
     @Transactional
@@ -86,7 +86,13 @@ public class InquiryServiceImpl implements InquiryService {
     @Transactional
     @Override   // 답변 안한 문의 리스트 조회
     public List<InquiryEntity> svcInquiryNoAnswerList() {
-        return (List<InquiryEntity>) inquiryRepository.findAllByInqAnswerIsNullOrderByInqSeq();
+        return inquiryRepository.findAllByInqAnswerIsNullOrderByInqSeq();
+    }
+
+    @Transactional
+    @Override   // 답변 된 모든 문의 리스트 조회
+    public List<InquiryEntity> svcInquiryYesAnswerList() {
+        return inquiryRepository.findAllByInqAnswerIsNotNullOrderByInqSeq();
     }
 
     @Transactional

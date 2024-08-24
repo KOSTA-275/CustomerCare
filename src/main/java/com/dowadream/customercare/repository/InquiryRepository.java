@@ -14,4 +14,6 @@ public interface InquiryRepository extends JpaRepository<InquiryEntity, Long> {
     List<InquiryEntity> findAllByInqAnswerIsNullOrderByInqSeq();
     // 답변 안한 문의 리스트 조회
 
+    List<InquiryEntity> findAllByInqAnswerIsNotNullOrderByInqSeq();
+    // 답변 된 모든 문의 리스트 조회
 }
