@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/inquiry")
+@RequestMapping("/customercare")
 public class InquiryController {
 
     @Autowired
     private InquiryService inquiryService;
 
     /**
-     * 문의 리스트 추가
+     * 문의 추가
      * @param inqVo
      * inqTitle, inqContent, userSeq
      */
@@ -33,6 +33,17 @@ public class InquiryController {
     @GetMapping("/inquiry_list")
     public ResponseEntity<List<InquiryEntity>> ctlInquiryList(){
         List<InquiryEntity> inqList = inquiryService.svcInquiryList();
+
+        return new ResponseEntity<>(inqList, HttpStatus.OK);
+    }
+
+    /**
+     * 특정 유저 문의 리스트 조회
+     *
+     */
+    @GetMapping("/inquiry_userlist")
+    public ResponseEntity<List<InquiryEntity>> ctlInquiryList(@RequestBody InquiryEntity inqVO){
+        List<InquiryEntity> inqList = inquiryService.svcInquiryUserList(inqVO);
 
         return new ResponseEntity<>(inqList, HttpStatus.OK);
     }
@@ -138,7 +149,5 @@ public class InquiryController {
     public void ctlInquiryAnswerDelete(@RequestBody InquiryAnswerEntity ansVO){
         inquiryService.svcInquiryAnswerDelete(ansVO);
     }
-
-
 
 }

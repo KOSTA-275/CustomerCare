@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface InquiryService {
     void svcInquiryInsert(InquiryEntity inqVO);                                     // 문의 추가
-    List<InquiryEntity> svcInquiryList();                                           // 문의 리스트 조회
+    List<InquiryEntity> svcInquiryList();                                           // 모든 문의 리스트 조회
+    List<InquiryEntity> svcInquiryUserList(InquiryEntity inqVO);                    // 특정 유저 문의 리스트 조회
     InquiryEntity svcInquiryDetail(InquiryEntity inqVO);                            // 문의 디테일 조회
     void svcInquiryUpdate(InquiryEntity inqVO);                                     // 문의 수정
     void svcInquiryDelete(InquiryEntity inqVO);                                     // 문의 삭제

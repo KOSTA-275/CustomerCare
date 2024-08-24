@@ -35,6 +35,12 @@ public class InquiryServiceImpl implements InquiryService {
     }
 
     @Transactional
+    @Override   // 특정 유저 문의 리스트 조회
+    public List<InquiryEntity> svcInquiryUserList(InquiryEntity inqVO) {
+        return inquiryRepository.findAllByUserSeqOrderByInqSeq(inqVO.getUserSeq());
+    }
+
+    @Transactional
     @Override   // 문의 디테일 조회
     public InquiryEntity svcInquiryDetail(InquiryEntity inqVO) {
         return inquiryRepository.findById(inqVO.getInqSeq()).get();
