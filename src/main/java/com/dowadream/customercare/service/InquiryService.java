@@ -17,4 +17,5 @@ public interface InquiryService {
     List<InquiryEntity> svcInquiryYesAnswerList();                                  // 답변 된 모든 문의 리스트 조회
     List<InquiryEntity> svcInquiryMyAnswerList(InquiryAnswerEntity ansVO);          // 내가 답한 문의 리스트 조회
     String svcInquiryAnswerUpdate(InquiryAnswerEntity ansVO, Long inqSeq);          // 문의 답변 수정
+    void svcInquiryAnswerDelete(InquiryAnswerEntity ansVO);                         // 문의 답변 삭제
 }

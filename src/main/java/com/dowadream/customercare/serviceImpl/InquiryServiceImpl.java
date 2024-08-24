@@ -139,4 +139,10 @@ public class InquiryServiceImpl implements InquiryService {
             return "noAnswerError"; // 답변이 아직 저장되지 않았음.
         }
     }
+
+    @Transactional
+    @Override   // 문의 답변 삭제
+    public void svcInquiryAnswerDelete(InquiryAnswerEntity ansVO) {
+        inquiryAnswerRepository.deleteById(ansVO.getAnsSeq());
+    }
 }

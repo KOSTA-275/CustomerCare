@@ -129,6 +129,16 @@ public class InquiryController {
         // 정상적 update -> "updated"
     }
 
+    /**
+     * 문의 답변 삭제
+     * @param ansVO
+     * ansSeq
+     */
+    @DeleteMapping("/answer_delete")
+    public void ctlInquiryAnswerDelete(@RequestBody InquiryAnswerEntity ansVO){
+        inquiryService.svcInquiryAnswerDelete(ansVO);
+    }
+
 
 
 }
