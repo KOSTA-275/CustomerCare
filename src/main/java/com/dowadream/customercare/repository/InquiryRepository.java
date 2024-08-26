@@ -20,4 +20,13 @@ public interface InquiryRepository extends JpaRepository<InquiryEntity, Long> {
 
     List<InquiryEntity> findAllByInqAnswerIsNotNullOrderByInqSeq();
     // 답변 된 모든 문의 리스트 조회
+
+    List<InquiryEntity> findAllByInqTitleContainingOrderByInqSeqDesc(String searchStr);
+    // 문의 검색(제목)
+
+    List<InquiryEntity> findAllByInqContentContainingOrderByInqSeqDesc(String searchStr);
+    // 문의 검색(내용)
+
+    List<InquiryEntity> findAllByInqTitleContainingOrInqContentContainingOrderByInqSeqDesc(String searchStr1, String searchStr2);
+    // 문의 검색(제목+내용)
 }

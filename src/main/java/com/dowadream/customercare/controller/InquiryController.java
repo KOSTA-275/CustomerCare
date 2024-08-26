@@ -34,7 +34,7 @@ public class InquiryController {
     public ResponseEntity<List<InquiryEntity>> ctlInquiryList(){
         List<InquiryEntity> inqList = inquiryService.svcInquiryList();
 
-        return new ResponseEntity<>(inqList, HttpStatus.OK);
+        return new ResponseEntity<> (inqList, HttpStatus.OK);
     }
 
     /**
@@ -57,7 +57,7 @@ public class InquiryController {
     public ResponseEntity<InquiryEntity> ctlInquiryDetail(@RequestBody InquiryEntity inqVO){
         InquiryEntity inqEntity = inquiryService.svcInquiryDetail(inqVO);
 
-        return new ResponseEntity<>(inqEntity, HttpStatus.OK);
+        return new ResponseEntity<> (inqEntity, HttpStatus.OK);
     }
 
     /**
@@ -103,7 +103,7 @@ public class InquiryController {
     public ResponseEntity<List<InquiryEntity>> ctlInquiryNoAnswerList(){
         List<InquiryEntity> inqList = inquiryService.svcInquiryNoAnswerList();
 
-        return new ResponseEntity<>(inqList, HttpStatus.OK);
+        return new ResponseEntity<> (inqList, HttpStatus.OK);
     }
 
     /**
@@ -113,7 +113,7 @@ public class InquiryController {
     public ResponseEntity<List<InquiryEntity>> ctlInquiryYesAnswerList(){
         List<InquiryEntity> inqList = inquiryService.svcInquiryYesAnswerList();
 
-        return new ResponseEntity<>(inqList, HttpStatus.OK);
+        return new ResponseEntity<> (inqList, HttpStatus.OK);
     }
 
     /**
@@ -125,7 +125,7 @@ public class InquiryController {
     public ResponseEntity<List<InquiryEntity>> ctlInquiryMyAnswerList(@RequestBody InquiryAnswerEntity ansVO){
         List<InquiryEntity> inqList = inquiryService.svcInquiryMyAnswerList(ansVO);
 
-        return new ResponseEntity<>(inqList, HttpStatus.OK);
+        return new ResponseEntity<> (inqList, HttpStatus.OK);
     }
 
     /**
@@ -148,6 +148,42 @@ public class InquiryController {
     @DeleteMapping("/answer_delete")
     public void ctlInquiryAnswerDelete(@RequestBody InquiryAnswerEntity ansVO){
         inquiryService.svcInquiryAnswerDelete(ansVO);
+    }
+
+    /**
+     * 문의 검색(문의 제목)
+     * @param insVO
+     * searchStr
+     */
+    @GetMapping("/search_bytitle")
+    public ResponseEntity<List<InquiryEntity>> ctlInquirySearchByTitle(@RequestBody InquiryEntity insVO){
+        List<InquiryEntity> inqList = inquiryService.svcInquirySearchByTitle(insVO);
+
+        return new ResponseEntity<> (inqList, HttpStatus.OK);
+    }
+
+    /**
+     * 문의 검색(문의 내용)
+     * @param insVO
+     * searchStr
+     */
+    @GetMapping("/search_bycontent")
+    public ResponseEntity<List<InquiryEntity>> ctlInquirySearchByContent(@RequestBody InquiryEntity insVO){
+        List<InquiryEntity> inqList = inquiryService.svcInquirySearchByContent(insVO);
+
+        return new ResponseEntity<> (inqList, HttpStatus.OK);
+    }
+
+    /**
+     * 문의 검색(문의 제목+내용)
+     * @param insVO
+     * searchStr
+     */
+    @GetMapping("/search_byall")
+    public ResponseEntity<List<InquiryEntity>> ctlInquirySearchByAll(@RequestBody InquiryEntity insVO){
+        List<InquiryEntity> inqList = inquiryService.svcInquirySearchByAll(insVO);
+
+        return new ResponseEntity<> (inqList, HttpStatus.OK);
     }
 
 }

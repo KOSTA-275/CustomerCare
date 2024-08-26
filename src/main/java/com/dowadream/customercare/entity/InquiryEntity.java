@@ -32,4 +32,8 @@ public class InquiryEntity {
 
     @OneToOne(mappedBy = "inquiry")
     private InquiryAnswerEntity inqAnswer;
+
+    //DB에는 없는 컬럼을 vo 프로퍼티로 사용하고 싶은 경우 : 컬럼에서 제외 DB로 생성안함
+    @Transient
+    private String searchStr;
 }

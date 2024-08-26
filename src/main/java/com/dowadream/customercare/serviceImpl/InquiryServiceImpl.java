@@ -151,4 +151,25 @@ public class InquiryServiceImpl implements InquiryService {
     public void svcInquiryAnswerDelete(InquiryAnswerEntity ansVO) {
         inquiryAnswerRepository.deleteById(ansVO.getAnsSeq());
     }
+
+
+
+    @Transactional
+    @Override   // 문의 검색(제목)
+    public List<InquiryEntity> svcInquirySearchByTitle(InquiryEntity inqVO) {
+        return inquiryRepository.findAllByInqTitleContainingOrderByInqSeqDesc(inqVO.getSearchStr());
+    }
+
+    @Transactional
+    @Override   // 문의 검색(내용)
+    public List<InquiryEntity> svcInquirySearchByContent(InquiryEntity inqVO) {
+        return inquiryRepository.findAllByInqContentContainingOrderByInqSeqDesc(inqVO.getSearchStr());
+    }
+
+    @Transactional
+    @Override   // 문의 검색(내용+제목)
+    public List<InquiryEntity> svcInquirySearchByAll(InquiryEntity inqVO) {
+        return inquiryRepository.findAllByInqTitleContainingOrInqContentContainingOrderByInqSeqDesc(inqVO.getSearchStr(), inqVO.getSearchStr());
+    }
+
 }
