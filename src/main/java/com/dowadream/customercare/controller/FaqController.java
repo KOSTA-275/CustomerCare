@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/faq")
+@RequestMapping("/customercare")
 public class FaqController {
 
     @Autowired
@@ -33,7 +33,7 @@ public class FaqController {
     public ResponseEntity<List<FaqEntity>> ctlFaqList(){
         List<FaqEntity> faqList = faqService.svcFaqList();
 
-        return new ResponseEntity<List<FaqEntity>>(faqList, HttpStatus.OK);
+        return new ResponseEntity<> (faqList, HttpStatus.OK);
     }
 
     /**
@@ -45,7 +45,7 @@ public class FaqController {
     public ResponseEntity<FaqEntity> ctlFaqDetail(@RequestBody FaqEntity faqVO){
         FaqEntity faqEntity = faqService.svcFaqDetail(faqVO);
 
-        return new ResponseEntity<FaqEntity>(faqEntity, HttpStatus.OK);
+        return new ResponseEntity<> (faqEntity, HttpStatus.OK);
     }
 
     /**

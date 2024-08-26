@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/notification")
+@RequestMapping("/customercare")
 public class NotificationController {
 
     @Autowired
@@ -33,7 +33,7 @@ public class NotificationController {
     public ResponseEntity<List<NotificationEntity>> ctlNotificationList(){
         List<NotificationEntity> notiList = notificationService.svcNotificationList();
 
-        return new ResponseEntity<List<NotificationEntity>>(notiList, HttpStatus.OK);
+        return new ResponseEntity<> (notiList, HttpStatus.OK);
     }
 
     /**
@@ -45,7 +45,7 @@ public class NotificationController {
     public ResponseEntity<NotificationEntity> ctlNotificationDetail(@RequestBody NotificationEntity notiVO){
         NotificationEntity notiEntity = notificationService.svcNotificationDetail(notiVO);
 
-        return new ResponseEntity<NotificationEntity>(notiEntity, HttpStatus.OK);
+        return new ResponseEntity<> (notiEntity, HttpStatus.OK);
     }
 
     /**
