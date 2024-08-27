@@ -19,6 +19,16 @@ configurations {
     }
 }
 
+//Eureka Discovey Client
+ext {
+    set('springCloudVersion', "2023.0.3")
+}
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -43,6 +53,14 @@ dependencies {
     //sweager
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+
+
+
+    //Eureka Discovery Client
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    //config client
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
 }
 
 tasks.named('test') {
