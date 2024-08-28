@@ -28,7 +28,7 @@ public class InqFileEntity {
     @Column(name = "fpath", nullable = false, length = 100)
     private String fpath;	//파일저장경로 :  </webapp>   /uploads/2015777_aa.jpg
 
-    @Column(name = "user_seq", length = 20, updatable = false, columnDefinition = "VARCHAR2(20) DEFAULT 'jpauser'")
+    @Column(name = "user_seq")
     private Long userSeq;
 
     @Column(name = "inq_file_regdate", nullable = false, columnDefinition = "date default sysdate")
