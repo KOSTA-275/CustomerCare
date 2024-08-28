@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Service
@@ -99,8 +102,19 @@ public class InquiryServiceImpl implements InquiryService {
 
     @Transactional
     @Override   // 문의 삭제
-    public void svcInquiryDelete(InquiryEntity inqVO) {
+    public void svcInquiryDelete(InquiryEntity inqVO) throws IOException {
+        InquiryEntity inquiryEntity = inquiryRepository.findById(inqVO.getInqSeq()).get();
+        if (!inquiryEntity.getInqFile().isEmpty()) {
+            List<InqFileEntity> files = inquiryEntity.getInqFile();
+            for(InqFileEntity fvo : files) {
+                Path path = Paths.get(fvo.getFpath());
+                Files.delete(path);
+            }
+        }
+        // db에 있는 file data 삭제 되기 전에 실제 file 삭제
+
         inquiryRepository.deleteById(inqVO.getInqSeq());
+
     }
     
     @Transactional

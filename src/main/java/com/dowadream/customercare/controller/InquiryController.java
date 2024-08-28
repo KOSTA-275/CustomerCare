@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -79,7 +80,7 @@ public class InquiryController {
      * inqSeq
      */
     @DeleteMapping("/inquiry_delete")
-    public void ctlInquiryDelete(@RequestBody InquiryEntity inqVO){
+    public void ctlInquiryDelete(@RequestBody InquiryEntity inqVO) throws IOException {
         inquiryService.svcInquiryDelete(inqVO);
     }
 

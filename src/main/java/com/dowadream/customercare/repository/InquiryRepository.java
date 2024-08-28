@@ -1,5 +1,6 @@
 package com.dowadream.customercare.repository;
 
+import com.dowadream.customercare.entity.InqFileEntity;
 import com.dowadream.customercare.entity.InquiryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,7 +20,6 @@ public interface InquiryRepository extends JpaRepository<InquiryEntity, Long> {
 
 //    List<InquiryEntity> findAllByInqAnswerIsNullAndAnsSeqIsNullOrderByInqSeq();
 //    // 답변 안한 문의 리스트 조회
-
 
     List<InquiryEntity> findAllByInqAnswerIsNotNullOrderByInqSeq();
     // 답변 된 모든 문의 리스트 조회

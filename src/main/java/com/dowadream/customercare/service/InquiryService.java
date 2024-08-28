@@ -4,6 +4,7 @@ import com.dowadream.customercare.entity.InquiryAnswerEntity;
 import com.dowadream.customercare.entity.InquiryEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface InquiryService {
@@ -12,7 +13,7 @@ public interface InquiryService {
     List<InquiryEntity> svcInquiryUserList(InquiryEntity inqVO);                                        // 특정 유저 문의 리스트 조회
     InquiryEntity svcInquiryDetail(InquiryEntity inqVO);                                                // 문의 디테일 조회
 //    void svcInquiryUpdate(InquiryEntity inqVO, List<MultipartFile> files);                              // 문의 수정
-    void svcInquiryDelete(InquiryEntity inqVO);                                                         // 문의 삭제
+    void svcInquiryDelete(InquiryEntity inqVO) throws IOException;                                                         // 문의 삭제
 
     String svcInquiryAnswerInsert(InquiryAnswerEntity ansVO, Long inqSeq, List<MultipartFile> files);   // 문의 답변 추가
     List<InquiryEntity> svcInquiryNoAnswerList();                                                       // 답변 안한 문의 리스트 조회
