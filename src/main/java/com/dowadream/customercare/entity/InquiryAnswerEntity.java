@@ -29,11 +29,12 @@ public class InquiryAnswerEntity {
     // Date는 변경 가능한 객체입니다. 객체의 상태가 변경될 수 있습니다.
     // LocalDate는 불변 객체로, 객체의 상태가 변경되지 않습니다. 날짜 말고 시간까지 필요하면 LocalDateTime 사용.
 
+    @OneToMany(mappedBy = "inquiryAnswer", cascade = CascadeType.ALL)
+    private List<InqFileEntity> inqFile;
+
     @JsonIgnore
     @OneToOne
     @JoinColumn(name="inq_seq", referencedColumnName="inq_seq", nullable = false)
     private InquiryEntity inquiry;
 
-    @OneToMany(mappedBy = "inquiryAnswer", cascade = CascadeType.ALL)
-    private List<InqFileEntity> inqFile;
 }

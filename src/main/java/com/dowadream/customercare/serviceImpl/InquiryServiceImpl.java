@@ -86,11 +86,16 @@ public class InquiryServiceImpl implements InquiryService {
         return inquiryRepository.findById(inqVO.getInqSeq()).get();
     }
 
-    @Transactional
-    @Override   // 문의 수정
-    public void svcInquiryUpdate(InquiryEntity inqVO) {
-        inquiryRepository.save(inqVO);
-    }
+//    @Transactional
+//    @Override   // 문의 수정
+//    public void svcInquiryUpdate(InquiryEntity inqVO, List<MultipartFile> files) {
+//        InquiryEntity inquiryEntity = inquiryRepository.save(inqVO);
+//        List<InqFileEntity> flist = inquiryEntity.getInqFile();
+//        for(InqFileEntity fileVO : flist) {
+//            fileVO.getInqFseq();
+//        }
+//
+//    }
 
     @Transactional
     @Override   // 문의 삭제
@@ -192,33 +197,33 @@ public class InquiryServiceImpl implements InquiryService {
         return inqList;
     }
 
-    @Transactional
-    @Override // 문의 답변 수정
-    public String svcInquiryAnswerUpdate(InquiryAnswerEntity ansVO, Long inqSeq) {
-        // inquiryRepository에서 inqSeq를 사용해 InquiryEntity 조회
-        Optional<InquiryEntity> optionalInqVO = inquiryRepository.findById(inqSeq);
-
-        // InquiryEntity가 존재하지 않을 경우 "notFoundError" 반환
-        if (optionalInqVO.isEmpty()) {
-            return "notFoundError";
-        }
-
-        InquiryEntity inqVO = optionalInqVO.get();
-
-        // 기존 답변이 존재하는지 확인
-        InquiryAnswerEntity existingAnswer = inqVO.getInqAnswer();
-
-        if (existingAnswer != null) {
-            // 기존 답변이 존재하는 경우 해당 엔티티를 수정
-            existingAnswer.setInqAnswer(ansVO.getInqAnswer()); // 수정할 필드들을 업데이트
-            existingAnswer.setAnsRegdate(ansVO.getAnsRegdate()); // 필요에 따라 추가 필드 업데이트
-            inquiryAnswerRepository.save(existingAnswer); // 수정된 답변 엔티티 저장
-
-            return "updated";
-        } else {
-            return "noAnswerError"; // 답변이 아직 저장되지 않았음.
-        }
-    }
+//    @Transactional
+//    @Override // 문의 답변 수정
+//    public String svcInquiryAnswerUpdate(InquiryAnswerEntity ansVO, Long inqSeq) {
+//        // inquiryRepository에서 inqSeq를 사용해 InquiryEntity 조회
+//        Optional<InquiryEntity> optionalInqVO = inquiryRepository.findById(inqSeq);
+//
+//        // InquiryEntity가 존재하지 않을 경우 "notFoundError" 반환
+//        if (optionalInqVO.isEmpty()) {
+//            return "notFoundError";
+//        }
+//
+//        InquiryEntity inqVO = optionalInqVO.get();
+//
+//        // 기존 답변이 존재하는지 확인
+//        InquiryAnswerEntity existingAnswer = inqVO.getInqAnswer();
+//
+//        if (existingAnswer != null) {
+//            // 기존 답변이 존재하는 경우 해당 엔티티를 수정
+//            existingAnswer.setInqAnswer(ansVO.getInqAnswer()); // 수정할 필드들을 업데이트
+//            existingAnswer.setAnsRegdate(ansVO.getAnsRegdate()); // 필요에 따라 추가 필드 업데이트
+//            inquiryAnswerRepository.save(existingAnswer); // 수정된 답변 엔티티 저장
+//
+//            return "updated";
+//        } else {
+//            return "noAnswerError"; // 답변이 아직 저장되지 않았음.
+//        }
+//    }
 
     @Transactional
     @Override   // 문의 답변 삭제

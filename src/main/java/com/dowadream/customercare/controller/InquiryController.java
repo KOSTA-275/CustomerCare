@@ -34,7 +34,7 @@ public class InquiryController {
      * 모든 문의 리스트 조회
      */
     @GetMapping("/inquiry_list")
-    public ResponseEntity<List<InquiryEntity>> ctlInquiryList(){
+    public ResponseEntity<List<InquiryEntity>> ctlInquiryList() {
         List<InquiryEntity> inqList = inquiryService.svcInquiryList();
 
         return new ResponseEntity<> (inqList, HttpStatus.OK);
@@ -63,15 +63,15 @@ public class InquiryController {
         return new ResponseEntity<> (inqEntity, HttpStatus.OK);
     }
 
-    /**
-     * 문의 수정
-     * @param inqVO
-     * inqSeq, inqTitle, inqContent, userSeq
-     */
-    @PutMapping("/inquiry_update")
-    public void ctlInquiryUpdate(@RequestBody InquiryEntity inqVO){
-        inquiryService.svcInquiryUpdate(inqVO);
-    }
+//    /**
+//     * 문의 수정
+//     * @param inqVO
+//     * inqSeq, inqTitle, inqContent, userSeq
+//     */
+//    @PutMapping("/inquiry_update")
+//    public void ctlInquiryUpdate(@RequestBody InquiryEntity inqVO){
+//        inquiryService.svcInquiryUpdate(inqVO);
+//    }
 
     /**
      * 문의 삭제
@@ -89,7 +89,6 @@ public class InquiryController {
      * inqAnswer, userSeq
      * @param inqSeq
      * @param files
-     *
      */
     @PostMapping("/answer_insert")
     public String ctlInquiryAnswerInsert(@ModelAttribute InquiryAnswerEntity ansVO,
@@ -135,18 +134,18 @@ public class InquiryController {
         return new ResponseEntity<> (inqList, HttpStatus.OK);
     }
 
-    /**
-     * 문의 답변 수정
-     * @param ansVO
-     * inqAnswer, userSeq
-     * @param inqSeq
-     */
-    @PutMapping("/answer_update")
-    public String ctlInquiryUpdate(@ModelAttribute InquiryAnswerEntity ansVO,
-                                   @RequestParam("inqSeq") Long inqSeq){
-        return inquiryService.svcInquiryAnswerUpdate(ansVO, inqSeq);
-        // 정상적 update -> "updated"
-    }
+//    /**
+//     * 문의 답변 수정
+//     * @param ansVO
+//     * inqAnswer, userSeq
+//     * @param inqSeq
+//     */
+//    @PutMapping("/answer_update")
+//    public String ctlInquiryUpdate(@ModelAttribute InquiryAnswerEntity ansVO,
+//                                   @RequestParam("inqSeq") Long inqSeq){
+//        return inquiryService.svcInquiryAnswerUpdate(ansVO, inqSeq, files);
+//        // 정상적 update -> "updated"
+//    }
 
     /**
      * 문의 답변 삭제
