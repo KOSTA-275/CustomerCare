@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,12 +20,14 @@ public class InquiryController {
 
     /**
      * 문의 추가
-     * @param inqVo
+     * @param inqVO
      * inqTitle, inqContent, userSeq
+     * @param files
+     * MultipartFile files
      */
     @PostMapping("/inquiry_insert")
-    public void ctlInquiryInsert(@RequestBody InquiryEntity inqVo){
-        inquiryService.svcInquiryInsert(inqVo);
+    public String ctlInquiryInsert(@ModelAttribute InquiryEntity inqVO, @RequestParam(value = "ufiles", required = false) List<MultipartFile> files){
+        return inquiryService.svcInquiryInsert(inqVO, files);
     }
 
     /**
@@ -85,11 +88,15 @@ public class InquiryController {
      * @param ansVO
      * inqAnswer, userSeq
      * @param inqSeq
+     * @param files
+     *
      */
     @PostMapping("/answer_insert")
-    public String ctlInquiryAnswerInsert(@ModelAttribute InquiryAnswerEntity ansVO, @RequestParam("inqSeq") Long inqSeq){
+    public String ctlInquiryAnswerInsert(@ModelAttribute InquiryAnswerEntity ansVO,
+                                         @RequestParam("inqSeq") Long inqSeq,
+                                         @RequestParam(value = "ufiles", required = false) List<MultipartFile> files){
 
-        return inquiryService.svcInquiryAnswerInsert(ansVO, inqSeq);
+        return inquiryService.svcInquiryAnswerInsert(ansVO, inqSeq, files);
         // 정상적 insert -> "created",
         // 없는 문의에 추가하고 있는 경우 -> "notFoundError",
         // 이미 문의 답변이 있는데 추가하는 경우 -> "alreadyExistError"
@@ -135,7 +142,8 @@ public class InquiryController {
      * @param inqSeq
      */
     @PutMapping("/answer_update")
-    public String ctlInquiryUpdate(@ModelAttribute InquiryAnswerEntity ansVO, @RequestParam("inqSeq") Long inqSeq){
+    public String ctlInquiryUpdate(@ModelAttribute InquiryAnswerEntity ansVO,
+                                   @RequestParam("inqSeq") Long inqSeq){
         return inquiryService.svcInquiryAnswerUpdate(ansVO, inqSeq);
         // 정상적 update -> "updated"
     }

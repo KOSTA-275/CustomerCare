@@ -1,18 +1,20 @@
 package com.dowadream.customercare.serviceImpl;
 
+import com.dowadream.customercare.entity.InqFileEntity;
 import com.dowadream.customercare.entity.InquiryAnswerEntity;
 import com.dowadream.customercare.entity.InquiryEntity;
+import com.dowadream.customercare.repository.InqFileRepository;
 import com.dowadream.customercare.repository.InquiryAnswerRepository;
 import com.dowadream.customercare.repository.InquiryRepository;
 import com.dowadream.customercare.service.InquiryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 @Service
 public class InquiryServiceImpl implements InquiryService {
@@ -21,11 +23,49 @@ public class InquiryServiceImpl implements InquiryService {
     private InquiryRepository inquiryRepository;
     @Autowired
     private InquiryAnswerRepository inquiryAnswerRepository;
+    @Autowired
+    private InqFileRepository inqFileRepository;
 
     @Transactional
     @Override   // 문의 추가
-    public void svcInquiryInsert(InquiryEntity inqVO) {
-        inquiryRepository.save(inqVO);
+    public String svcInquiryInsert(InquiryEntity inqVO, List<MultipartFile> files) {
+        InquiryEntity inqEntity = inquiryRepository.save(inqVO);
+
+        //사용자파일명, 크기, 확장자, 시스템파일명(유니크)
+        InqFileEntity fvo = null;
+        if (files != null) {
+            for(MultipartFile file : files) {
+                fvo = new InqFileEntity();
+                String fileRealName 	= file.getOriginalFilename();
+                Long size 				= file.getSize();
+                String fileExtension 	= fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+                String uniqueName 		= UUID.randomUUID().toString().split("-")[0];
+
+                String uploadFolder = "C:\\KOSTA\\dowadream\\imgaes\\image_test";
+                String filePath 	=  uploadFolder +"\\" + uniqueName + fileExtension;
+
+                fvo.setOname(fileRealName);
+                fvo.setSname(uniqueName + fileExtension);						//45dfered.txt
+                fvo.setFsize(size);
+                fvo.setFpath(filePath);   	//C:\\test\\upload\\45dfered.txt
+                fvo.setUserSeq(inqVO.getUserSeq());
+                fvo.setInquiry(inqEntity);
+
+                //파일카피
+                try {
+                    file.transferTo( new File(filePath) );
+                    inqFileRepository.save(fvo);
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } //e.o.for
+        } //e.o.if
+
+        return "created";            //  /templates/  hello   .html
+
     }
 
     @Transactional
@@ -60,7 +100,7 @@ public class InquiryServiceImpl implements InquiryService {
     
     @Transactional
     @Override // 문의 답변 입력 
-    public String svcInquiryAnswerInsert(InquiryAnswerEntity ansVO, Long inqSeq) {
+    public String svcInquiryAnswerInsert(InquiryAnswerEntity ansVO, Long inqSeq, List<MultipartFile> files) {
         // inquiryRepository에서 inqSeq를 사용해 InquiryEntity 조회
         Optional<InquiryEntity> optionalInqVO = inquiryRepository.findById(inqSeq);
 
@@ -76,9 +116,43 @@ public class InquiryServiceImpl implements InquiryService {
         // inqAnswer가 null인 경우에만 답변을 추가
         if (inqVO.getInqAnswer() == null) {
             ansVO.setInquiry(inqVO);
-            inquiryAnswerRepository.save(ansVO);
+            InquiryAnswerEntity inquiryAnswerEntity = inquiryAnswerRepository.save(ansVO);
 
+            //사용자파일명, 크기, 확장자, 시스템파일명(유니크)
+            InqFileEntity fvo = null;
+            if (files != null) {
+                for(MultipartFile file : files) {
+                    fvo = new InqFileEntity();
+                    String fileRealName 	= file.getOriginalFilename();
+                    Long size 				= file.getSize();
+                    String fileExtension 	= fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
+                    String uniqueName 		= UUID.randomUUID().toString().split("-")[0];
+
+                    String uploadFolder = "C:\\KOSTA\\dowadream\\imgaes\\image_test";
+                    String filePath 	=  uploadFolder +"\\" + uniqueName + fileExtension;
+
+                    fvo.setInquiry(inqVO);
+                    fvo.setOname(fileRealName);
+                    fvo.setSname(uniqueName + fileExtension);						//45dfered.txt
+                    fvo.setFsize(size);
+                    fvo.setFpath(filePath);   	//C:\\test\\upload\\45dfered.txt
+                    fvo.setUserSeq(inqVO.getUserSeq());
+                    fvo.setInquiryAnswer(inquiryAnswerEntity);
+
+                    //파일카피
+                    try {
+                        file.transferTo( new File(filePath) );
+                        inqFileRepository.save(fvo);
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } //e.o.for
+            } //e.o.if
             return "created";
+
         } else {
             // 이미 답변이 존재하는 경우 처리 (필요에 따라 로그를 남기거나 예외를 던질 수 있음)
             return "alreadyExistError";

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "InquiryEntity")
 @Data
@@ -30,8 +31,11 @@ public class InquiryEntity {
     // Date는 변경 가능한 객체입니다. 객체의 상태가 변경될 수 있습니다.
     // LocalDate는 불변 객체로, 객체의 상태가 변경되지 않습니다. 날짜 말고 시간까지 필요하면 LocalDateTime 사용.
 
-    @OneToOne(mappedBy = "inquiry")
+    @OneToOne(mappedBy = "inquiry", cascade = CascadeType.ALL)
     private InquiryAnswerEntity inqAnswer;
+
+    @OneToMany(mappedBy = "inquiry", cascade = CascadeType.ALL)
+    private List<InqFileEntity> inqFile;
 
     //DB에는 없는 컬럼을 vo 프로퍼티로 사용하고 싶은 경우 : 컬럼에서 제외 DB로 생성안함
     @Transient
