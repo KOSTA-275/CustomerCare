@@ -19,10 +19,10 @@ public class NotificationController {
     /**
      * 공지사항 리스트 추가
      * @param notiVO
-     * notiTitle, notiContent, userSeq
+         * notiTitle, notiContent, userSeq
      */
     @PostMapping("/noti_insert")
-    public void ctlNotificationInsert(@RequestBody NotificationEntity notiVO){
+    public void ctlNotificationInsert(@ModelAttribute NotificationEntity notiVO){
         notificationService.svcNotificationInsert(notiVO);
     }
 
@@ -64,7 +64,7 @@ public class NotificationController {
      * notiSeq
      */
     @DeleteMapping("/noti_delete")
-    public void ctlNotificationDelete(@RequestBody NotificationEntity notiVO){
+    public void ctlNotificationDelete(@ModelAttribute NotificationEntity notiVO){
         notificationService.svcNotificationDelete(notiVO);
     }
 }
