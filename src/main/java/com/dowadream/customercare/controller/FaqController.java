@@ -22,7 +22,7 @@ public class FaqController {
      * faqTitle, faqContent, userSeq
      */
     @PostMapping("/faq_insert")
-    public void ctlFaqInsert(@RequestBody FaqEntity faqVO){
+    public void ctlFaqInsert(@ModelAttribute FaqEntity faqVO){
         faqService.svcFaqInsert(faqVO);
     }
 

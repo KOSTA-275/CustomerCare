@@ -43,7 +43,8 @@ public class InquiryController {
 
     /**
      * 특정 유저 문의 리스트 조회
-     *
+     @param inqVO
+     * userSeq
      */
     @GetMapping("/inquiry_userlist")
     public ResponseEntity<List<InquiryEntity>> ctlInquiryList(@RequestBody InquiryEntity inqVO){
@@ -129,7 +130,7 @@ public class InquiryController {
      * userSeq
      */
     @GetMapping("/inquiry_mylist")
-    public ResponseEntity<List<InquiryEntity>> ctlInquiryMyAnswerList(@RequestBody InquiryAnswerEntity ansVO){
+    public ResponseEntity<List<InquiryEntity>> ctlInquiryMyAnswerList(@ModelAttribute InquiryAnswerEntity ansVO){
         List<InquiryEntity> inqList = inquiryService.svcInquiryMyAnswerList(ansVO);
 
         return new ResponseEntity<> (inqList, HttpStatus.OK);

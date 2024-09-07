@@ -64,7 +64,7 @@ public class NotificationController {
      * notiSeq
      */
     @DeleteMapping("/noti_delete")
-    public void ctlNotificationDelete(@ModelAttribute NotificationEntity notiVO){
+    public void ctlNotificationDelete(@RequestBody NotificationEntity notiVO){
         notificationService.svcNotificationDelete(notiVO);
     }
 }
